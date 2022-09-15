@@ -18,7 +18,7 @@
         "output": "",
         "comparison": "included",
         "timeout": 10,
-        "points": 30
+        "points": 25
       },
       {
         "name": "Correct output for exiting with kill - ./main -n 1",
@@ -28,7 +28,7 @@
         "output": "",
         "comparison": "included",
         "timeout": 10,
-        "points": 30
+        "points": 25
       }
       
     ]
