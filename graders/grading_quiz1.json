@@ -1,0 +1,36 @@
+{
+    "tests": [
+      {
+        "name": "Compilation",
+        "setup": "g++ -std=c++17 -g -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer main.cpp",
+        "run": "ls -la | grep a.out",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 20
+      },
+      {
+        "name": "Correct output for exiting normally - ./main -n 0",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "RES=$(. ./test-files/test_normal.txt); ./main -n 0 2>/dev/null | grep -F -- \"${RES}\" | wc -l | grep -qE \"[7-9]|1[0-9]\"",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 40
+      },
+      {
+        "name": "Correct output for exiting with kill - ./main -n 1",
+        "setup": "make -s clean; make -s >/dev/null 2>&1",
+        "run": "RES=$(. ./test-files/test_kill.txt); ./main -n 1 2>/dev/null | grep -F -- \"${RES}\" | wc -l | grep -qE \"[3-9]\"",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 40
+      }
+      
+    ]
+  }
+  
