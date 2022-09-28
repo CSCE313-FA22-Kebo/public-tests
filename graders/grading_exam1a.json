@@ -1,45 +1,44 @@
 {
-    "tests": [
-      {
-        "name": "Compilation",
-        "setup": "g++ -std=c++17 -g -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer p1.cpp",
-        "run": "ls -la | grep a.out",
-        "input": "",
-        "output": "",
-        "comparison": "included",
-        "timeout": 10,
-        "points": 10
-      },
-      {
-        "name": "Correct output for n = 5 - ./p1 -n 5",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "./test-files/t1.sh 5",
-        "input": "",
-        "output": "",
-        "comparison": "included",
-        "timeout": 10,
-        "points": 20
-      },
-      {
-        "name": "Correct output for n = 100 - ./p1 -n 100",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "./test-files/t1.sh 100",
-        "input": "",
-        "output": "",
-        "comparison": "included",
-        "timeout": 10,
-        "points": 20
-      },
-      {
-        "name": "Messages from child processes",
-        "setup": "make -s clean; make -s >/dev/null 2>&1",
-        "run": "grep -qc \"hello\" p1.cpp",
-        "input": "",
-        "output": "",
-        "comparison": "included",
-        "timeout": 10,
-        "points": -10
-      }
-    ]
-  }
-  
+  "tests": [
+    {
+      "name": "Compilation",
+      "setup": "g++ -std=c++17 -g -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer p1.cpp",
+      "run": "ls -la | grep a.out",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Messages from child processes",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "grep -qc \"hello\" p1.cpp | grep 0",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Correct output for n = 5 - ./p1 -n 5",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./test-files/t1.sh 5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Correct output for n = 100 - ./p1 -n 100",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./test-files/t1.sh 100",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 20
+    }
+  ]
+}
