@@ -1,0 +1,54 @@
+{
+  "tests": [
+    {
+      "name": "Compilation",
+      "setup": "g++ -std=c++17 -g -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer p1.cpp",
+      "run": "ls -la | grep a.out",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Pipe creation",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "$(grep -c \"pipe(\" p2.cpp) -ge 2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Using 2x read",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "$(grep -c \"read(\" p2.cpp) -ge 2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Using 2x write",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "grep -c \"write(\" p2.cpp) -ge 2 ",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    },
+    {
+      "name": "Correct output for message = hello world - ./p2 \"hello world\"",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "./test-files/t1.sh \"hello world\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 20
+    }
+  ]
+}
