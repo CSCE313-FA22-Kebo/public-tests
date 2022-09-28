@@ -12,8 +12,8 @@
     },
     {
       "name": "Messages from child processes",
-      "setup": "make -s clean;",
-      "run": "grep -qc \"hello\" p1.cpp | cat",
+      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "run": "!(grep -qc \"hello\" p1.cpp)",
       "input": "",
       "output": "",
       "comparison": "included",
