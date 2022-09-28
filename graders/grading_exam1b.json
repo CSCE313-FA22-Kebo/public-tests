@@ -2,7 +2,7 @@
   "tests": [
     {
       "name": "Compilation",
-      "setup": "g++ -std=c++17 -g -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer p1.cpp",
+      "setup": "g++ -std=c++17 -g -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer p2.cpp",
       "run": "ls -la | grep a.out",
       "input": "",
       "output": "",
@@ -13,7 +13,7 @@
     {
       "name": "Pipe creation",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "$(grep -c \"pipe(\" p2.cpp) -ge 2",
+      "run": "grep -c \"pipe(\" p2.cpp -ge 2",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -23,7 +23,7 @@
     {
       "name": "Using 2x read",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "$(grep -c \"read(\" p2.cpp) -ge 2",
+      "run": "grep -c \"read(\" p2.cpp -ge 2",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -33,7 +33,7 @@
     {
       "name": "Using 2x write",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "grep -c \"write(\" p2.cpp) -ge 2 ",
+      "run": "grep -c \"write(\" p2.cpp -ge 2 ",
       "input": "",
       "output": "",
       "comparison": "included",
