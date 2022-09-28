@@ -13,7 +13,7 @@
     {
       "name": "Pipe creation",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "grep -c \"pipe(\" p2.cpp -ge 2",
+      "run": "$(grep -c \"pipe(\" p2.cpp) -ge 2",
       "input": "",
       "output": "",
       "comparison": "included",
