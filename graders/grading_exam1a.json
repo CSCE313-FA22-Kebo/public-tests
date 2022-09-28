@@ -12,7 +12,7 @@
     },
     {
       "name": "Messages from child processes",
-      "setup": "make -s clean; make -s >/dev/null 2>&1",
+      "setup": "make -s clean;",
       "run": "grep -qc \"hello\" p1.cpp | cat",
       "input": "",
       "output": "",
