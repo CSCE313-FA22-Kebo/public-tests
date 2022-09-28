@@ -23,7 +23,7 @@
     {
       "name": "Using 2x read",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "grep -c \"read(\" p2.cpp -ge 2",
+      "run": "[ $(grep -c \"read(\" p2.cpp) -ge 2 ]",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -33,7 +33,7 @@
     {
       "name": "Using 2x write",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "grep -c \"write(\" p2.cpp -ge 2 ",
+      "run": "[ $(grep -c \"write(\" p2.cpp) -ge 2 ]",
       "input": "",
       "output": "",
       "comparison": "included",
