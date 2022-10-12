@@ -17,74 +17,66 @@ if [[ COLOUR -eq 0 ]]; then
     NC='\033[0m'
 else
     ORANGE='\033[0m'
-    GREEN='\033[0m'    RED='\033[0m'
+    GREEN='\033[0m'
+    RED='\033[0m'
     NC='\033[0m'
 fi
 
-SCORE=0
+SCORE=5
 
+# if you made it here then it compiled lol
 echo -e "\nStart testing"
-remake
 echo -e "\nTesting :: Compilation\n"
-echo -e "  ${GREEN}Passed${NC}" # if you've made it this far, it's compiling
-SCORE=$(($SCORE+10))
+echo -e "  ${GREEN}Passed${NC}"
 
-# if outputs differ from expected output files, then incorrect output (2 test files)
 remake
-echo -e "\nTesting :: Correct Output Pt. 1\n"
-cat ./test-files/test_output.txt ./test-files/test_exit.txt > ./test-files/cmd.txt
-./data_entry -c "Boring Names 777" -f "./test-files/cmd.csv" < ./test-files/cmd.txt 2>&1 >/dev/null
-if diff ./test-files/cmd.csv ./test-files/test_output.csv >/dev/null; then
+echo -e "\nTesting :: Memory Leakage\n"
+if ./MasterChef -i test-files/NoDep.csv 2>/dev/null 1>/dev/null; then
+    echo -e "  ${GREEN}Passed${NC}"
+    SCORE=$(($SCORE+5))
+else
+    echo -e "  ${RED}Failed${NC}"
+fi
+
+remake
+echo -e "\nTesting :: Output without Dependencies \n"
+./MasterChef -i test-files/NoDep.csv > test-files/cmd.txt 2>/dev/null
+if diff -q test-files/cmd.txt test-files/no_dep_output.txt 2>/dev/null; then
     echo -e "  ${GREEN}Passed${NC}"
     SCORE=$(($SCORE+16))
 else
     echo -e "  ${RED}Failed${NC}"
 fi
 
+# this includes a 0 length test case
 remake
-echo -e "\nTesting :: Correct Output Pt. 2\n"
-cat ./test-files/test_output2.txt ./test-files/test_exit.txt > ./test-files/cmd.txt
-./data_entry -c "Name ID Age" -f "./test-files/cmd.csv" < ./test-files/cmd.txt 2>&1 >/dev/null
-if diff ./test-files/cmd.csv ./test-files/test_output2.csv >/dev/null; then
+echo -e "\nTesting :: Output with Dependencies \n"
+./MasterChef -i test-files/RecipeInput.csv > test-files/cmd.txt 2>/dev/null
+if diff -q test-files/cmd.txt test-files/pate_output.txt 2>/dev/null; then
     echo -e "  ${GREEN}Passed${NC}"
     SCORE=$(($SCORE+17))
 else
     echo -e "  ${RED}Failed${NC}"
 fi
 
-# if strace clones thread at least twice, then passes
 remake
-echo -e "\nTesting :: Use of Threads\n"
-cat ./test-files/test_threads.txt ./test-files/test_exit.txt > ./test-files/cmd.txt
-strace >/dev/null -o out.trace ./data_entry -c "Emote Num1 Num2" -f "./test-files/cmd.csv" < ./test-files/cmd.txt 2>&1 >/dev/null
-if [ `cat out.trace |  grep "clone" | grep "CLONE_THREAD" | wc -l` -ge 2 ]; then
+echo -e "\nTesting :: Use of Timers \n"
+strace -o trace.txt ./MasterChef -i test-files/NoDep.csv >out1.txt 2>/dev/null
+if [ $(grep 'rt_sigaction(SIGRTMIN' trace.txt | wc -l) -gt 0 ]; then
     echo -e "  ${GREEN}Passed${NC}"
-    SCORE=$(($SCORE+22))
+    SCORE=$(($SCORE+24))
 else
-    echo -e "  ${RED}Failed${NC}"
+    echo -e "  ${RED}Incorrect use of signals${NC}"
 fi
 
-# if code has to kill thread itself, then fail
-remake
-echo -e "\nTesting :: Threads Close Correctly\n"
-cat ./test-files/test_threads.txt ./test-files/test_exit.txt > ./test-files/cmd.txt
-strace >/dev/null -o out.trace ./data_entry -c "Emote Num1 Num2" -f "./test-files/cmd.csv" < ./test-files/cmd.txt 2>&1 >/dev/null
-if cat out.trace | egrep -q "tgkill|tkill"; then
-    echo -e "  ${RED}Failed${NC}"
-else
+# remake
+echo -e "\nTesting :: Use of Signals \n"
+# strace -o trace.txt ./MasterChef -i test-files/NoDep.csv >out2.txt 2>/dev/null
+if [ $(grep 'rt_sigaction(SIGUSR1' trace.txt | wc -l) -gt 0 ]; then
     echo -e "  ${GREEN}Passed${NC}"
-    SCORE=$(($SCORE+22))
-fi
-
-# if returns a fail then memory leak
-remake
-echo -e "\nTesting :: Memory Leakage\n"
-cat ./test-files/test_output.txt ./test-files/test_exit.txt > ./test-files/cmd.txt
-if ./data_entry -c "Emote Num1 Num2" -f "./test-files/cmd.csv" < ./test-files/cmd.txt 2>&1 >/dev/null; then
-    echo -e "  ${GREEN}Passed${NC}"
-    SCORE=$(($SCORE+13))
+    SCORE=$(($SCORE+33))
 else
-    echo -e "  ${RED}Failed${NC}"
+    echo -e "  ${RED}Incorrect use of signals${NC}"
 fi
 
 # print score and delete executable

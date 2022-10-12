@@ -1,11 +1,13 @@
 CXX=g++
 CXXFLAGS=-std=c++17 -g -pedantic -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer
-LDLIBS=
+LDLIBS=-lrt
 
-SRCS=data_entry.cpp
-DEPS=BoundedBuffer.cpp
+
+SRCS=MasterChef.cpp
+DEPS=Step.cpp StepList.cpp
 BINS=$(SRCS:%.cpp=%.exe)
 OBJS=$(DEPS:%.cpp=%.o)
+
 
 all: clean $(BINS)
 
@@ -16,10 +18,10 @@ all: clean $(BINS)
 	$(CXX) $(CXXFLAGS) -o $(patsubst %.exe,%,$@) $^ $(LDLIBS)
 
 
-.PHONY: clean print-var test
+.PHONY: clean test
 
 clean:
-	rm -f data_entry a.out *.o *.csv *.trace ./test-files/cmd*
+	rm -f MasterChef ./test-files/cmd*.txt out1.txt out2.txt trace.txt
 
 test: all
 	chmod u+x le5-tests.sh
