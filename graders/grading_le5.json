@@ -43,7 +43,7 @@
     {
       "name": "Use of Timers",
       "setup": "make -s clean; make -s >/dev/null 2>&1",
-      "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGRTMIN' | wc -l) -gt 0 ]",
+      "run": "strace -o trace.tst ./MasterChef -i test-files/NoDep.csv 1>/dev/null 2>&1; [ $(cat trace.tst | grep 'rt_sigaction(SIGRT_' | wc -l) -gt 0 ]",
       "input": "",
       "output": "",
       "comparison": "included",

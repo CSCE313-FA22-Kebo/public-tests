@@ -62,7 +62,7 @@ fi
 remake
 echo -e "\nTesting :: Use of Timers \n"
 strace -o trace.txt ./MasterChef -i test-files/NoDep.csv >out1.txt 2>/dev/null
-if [ $(grep 'rt_sigaction(SIGRTMIN' trace.txt | wc -l) -gt 0 ]; then
+if [ $(grep 'rt_sigaction(SIGRT_' trace.txt | wc -l) -gt 0 ]; then
     echo -e "  ${GREEN}Passed${NC}"
     SCORE=$(($SCORE+24))
 else
