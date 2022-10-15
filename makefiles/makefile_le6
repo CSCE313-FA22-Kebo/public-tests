@@ -22,5 +22,5 @@ clean:
 	rm -f data_entry a.out *.o *.csv *.trace ./test-files/cmd*
 
 test: all
-	chmod u+x le5-tests.sh
-	./le5-tests.sh
+	chmod u+x le6-tests.sh
+	./le6-tests.sh
